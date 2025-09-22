@@ -8,7 +8,7 @@
       .box {
         width: 70px;
         height: 70px;
-        background-color: teal;
+        background-color: rgb(10, 10, 10);
         font-size: 300%;
         text-align: center;
         user-select: none;
@@ -69,8 +69,9 @@
         //////////////////////////////////////////////////////////////////
 
         // TODO 2 - Variable declarations
-
-
+var positionX = 50;
+var speed = 10;
+var points = 0;
 
 
 
@@ -80,10 +81,13 @@
          * If the box drifts off the screen, turn it around!
          */
         function update() {
-
-        
-
-          
+       positionX += speed;
+       if (positionX + box.width() > boardWidth) {
+       positionX = boardWidth - box.width();
+       speed *= -1;
+       }
+       moveBoxTo(positionX);
+       changeBoxText(points);       
         }
 
         /**
@@ -94,14 +98,63 @@
          * - move the box to the left side of the screen.
          */
         function handleBoxClick() {
-
-
-
-
+       points++;
+       
+       if (speed > 0) {
+       speed += 2;
+       } else {
+        speed -= 2;
+       }
+       positionX = 0;
+       moveBoxTo(positionX);
+       changeBoxText(points);
+        }
+        
+        var positionY = 100;
+        var speedY = 8;
+         
+        function moveBoxTo(newPosiotionX, newposiotionY) {
+          box.css("left", newPositionX);
+          box.css("top", newPosiotionY);
+        }
+        
+        function update() {
+          positionX += speed;
+          positionY += speedY;
         }
 
+        if(positionX + box.width() > boardWidth){
+         positionX = boardWidth - box.width();
+         speed *= -1;
+        }
 
+        if(positionX < 0) {
+         positionX = 0;
+         speed *= -1;
+        }
+
+        if(positionY + box.height() > board.height()) {
+         positionY = box.height() - box.height();
+         speedY *= -1;
+        }
+
+        moveBoxTo(positionX, positionY);
+        changeBoxText(points);
+
+        function handleBoxClick() {
+        points++;
         
+        if (speed > 0) {
+          speed += 2;
+        } else {
+          speedY -= 2;
+        }
+        positionX = 0;
+        positionY = 0;
+
+        moveBoxTo(positionX, positionY);
+        changeBoxText(points);
+        }
       })();
     </script>
   </body>
